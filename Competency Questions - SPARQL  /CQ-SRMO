@@ -1,0 +1,210 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////          Competence Questions to the SRMO      ///////////////////////////////////////////
+////////////////          Author: Jhon Eder Masso Daza         ///////////////////////////////////////////
+////////////////          email: masso@unicauca.edu.co         ///////////////////////////////////////////
+////////////////                                               ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+CQ1: What are the established objectives and metrics for the RMS1?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?O ?M
+WHERE { 
+  ?RMS SRMO:mustHaveAssigned ?O.
+  ?O SRMO:isMeasuredBy ?M.
+  ?RMS SRMO:identifier "RMS1"
+}
+
+CQ2: What are the RM process tasks associated with the “RMS1”, what are the management resources allocated to them, and what is their accountability?
+
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?P ?T ?MR ?R
+WHERE {
+  ?P SRMO:consistsOf ?A.
+  ?A SRMO:canBeSubdividedInto?T.
+  ?RAM_Task SRMO:mustSetOut ?T .
+  ?RAM_Task SRMO:mustSpecify ?MR.
+  ?RAM_Task SRMO:provides ?R .
+  ?RMS SRMO:mustStipulate ?RAM_Task .
+  ?RMS SRMO:identifier "RMS1".
+}
+
+CQ3: What are the objectives and metrics assigned to the RM process “RMProcess”?
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?P ?O ?M
+WHERE {	
+  ?P SRMO:mustHaveAssigned ?O.
+  ?O SRMO:isMeasuredBy ?M.
+  ?P SRMO:identifier "RMProcess".
+}
+
+CQ4: What are the procedures that can be used in the RM process tasks “RMProcess”?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?P ?A ?Pr 
+WHERE {
+  ?P SRMO:consistsOf ?A.
+  ?A SRMO:canBeSubdividedInto ?T.
+  ?T SRMO:canUse ?Pr.
+  ?P SRMO:identifier "RMProcess"
+}
+
+CQ5	What are the active risk management strategies, what scope do they have, and through what approach are they implemented?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT  ?RMS ?App
+WHERE {
+  ?RMS SRMO:hasAsItsScope ?A .
+  ?RMS SRMO:areManagedWith ?App.
+  ?RMS SRMO:status "Active".
+}
+
+
+CQ6: What are the identified risk categories and subcategories in the “RMS1”?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?rC ?sbRCL1 ?sbRCL2
+WHERE {
+  ?rC SRMO:mayHave ?sbRCL1.
+  ?sbRCL1 SRMO:mayHave ?sbRCL2.
+  ?RMS SRMO:shouldIdentify ?rC.
+  ?RMS SRMO:identifier "RMS1". 
+}
+
+CQ7: What assets of the organisation are implementing the “RMS1”?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT  ?A ?RMP ?RMS
+WHERE {
+  ?A SRMO:canContain ?RMP.
+  ?RMP SRMO:shallConsider ?RMS.
+  ?RMP SRMO:status "Active".
+  ?RMS SRMO:identifier "RMS1".
+}
+
+CQ8: What are the acceptance criteria defined in the RMS1 and which are considered by an asset of the “Project - Project001” organisation?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT  ?aC
+WHERE {
+?RMP SRMO:hasRelated ?aC.
+?A SRMO:canContain ?RMP.
+?RMP SRMO:status "Active".
+?A SRMO:identifier "Project001"
+}
+
+CQ9: What risk factors are taken into account by an asset of the “Project - Project001” organisation and what risks do they cause?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?rF ?R
+WHERE {	
+  ?A SRMO:canContain ?RMP.
+  ?RMP SRMO:takesAccountOf ?rF.
+  ?rF SRMO:canGenerate ?R.
+  ?rC SRMO:canClassify ?R.
+  ?RMP SRMO:status "Active".
+  ?A SRMO:identifier "Project001".
+}
+
+CQ10: What impact criteria are related to an asset of the “Project - Project001” organisation and with which control variables are they associated?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?iC ?eT ?cV ?S
+WHERE {	
+  ?A SRMO:canContain ?RMP.
+  ?RMP SRMO:shouldTakeAccountOf ?iC.
+  ?iC SRMO:require ?S.
+  ?iC SRMO:hasAssociated ?cV.
+  ?iC SRMO:effectType ?eT.
+  ?RMP SRMO:status "Active".
+  ?A SRMO:identifier "Project001".
+}
+
+CQ11: What risks have been identified for an asset of the “Project – Project 001” organisation, to which category do they belong, and who owns them?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?R ?rC ?mR
+WHERE {	
+  ?A SRMO:canContain ?RMP.
+  ?RMP SRMO:considers ?rP.
+  ?rP SRMO:identifies ?R.
+  ?rC SRMO:canClassify ?R.
+  ?R SRMO:belongsTo ?mR.
+  ?rP SRMO:status "Active".
+  ?RMP SRMO:status "Active".
+  ?A SRMO:identifier "Project001".
+}
+
+CQ12: What triggers are being used to anticipate the occurrence of the identified risks for an asset of the “Project – Project 001” organisation?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?R ?M
+WHERE {	
+  ?A SRMO:canContain ?RMP.
+  ?RMP SRMO:considers ?rP.
+  ?rP SRMO:identifies ?R.
+  ?R SRMO:areMonitoredBy ?M.
+  ?rP SRMO:status "Active".
+  ?RMP SRMO:status "Active".
+  ?A SRMO:identifier "Project001".
+}
+
+
+CQ13: What are the causes that generate an “R001” risk, and what possible consequences could it trigger?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?cons ?cause
+WHERE {	
+{
+?R SRMO:areCausedBy ?cause.
+  ?R SRMO:identifier "R001".
+}
+          UNION
+{
+  ?R SRMO:mayTrigger ?cons.
+  ?R SRMO:identifier "R001".
+}
+}
+
+
+CQ14: What assets have been impacted by the materialisation of a “Poor Requirements Quality (R001)” risk and what are their consequences on the objectives?	
+PPREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?a ?cons ?cV
+WHERE { 
+  ?R SRMO:canMaterialiseIn ?rE.
+  ?rE SRMO:effects ?REM.
+  ?REM SRMO:affects ?a.
+  ?REM SRMO:results ?cons.
+  ?consq SRMO:areSubjectTo ?cV.
+  ?R SRMO:identifier "R001"
+}
+
+CQ15: What actions help to counteract a “Poor Requirements Quality (R001)” risk?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?rAction ?aT
+WHERE { 
+  ?rA SRMO:mustBelongTo ?r.
+  ?rA SRMO:allowsPlanning ?rAction.
+  ?rAction SRMO:actionType ?aT.
+  ?r SRMO:identifier "R001"
+}
+
+
+CQ16	What are the responses to risk events that materialise in a  “Poor Requirements Quality (R001)” risk?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?rE ?rA ?rR
+WHERE { 
+  ?r SRMO:canMaterialiseIn ?rE.
+  ?rA SRMO:mayBeSubjectTo ?rE.
+  ?rA SRMO:mustBelongTo ?r.
+  ?rA SRMO:contains ?rR.
+  ?r SRMO:identifier "R001".
+}
+
+
+CQ17: What are the causes and risk factors that may influence in the materialisation of a “Poor Requirements Quality (R001)” risk?	
+PREFIX SRMO: <http://www.semanticweb.org/jhonmassodaza/ontologies/2021/0/SRMO#>
+SELECT ?c ?rF
+WHERE { 
+    {
+        ?r SRMO:canMaterialiseIn ?rE.
+        ?rE SRMO:occursFor ?c.
+        ?r SRMO:identifier "R001".
+    }
+          UNION
+    { 
+        ?r SRMO:canMaterialiseIn ?rE.
+        ?rE SRMO:isInfluencedBy ?rF.
+        ?r SRMO:identifier "R001".
+    }
+}
